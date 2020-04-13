@@ -6,3 +6,19 @@
 N % 2 == 0
  ture　▶︎　偶数
  false　▶︎　奇数
+
+# nまでの和
+s = 0
+i = 1
+
+while i <= n do
+  s = s + i
+  i += 1
+end
+
+# N回ゲーム
+
+while i <= N do
+  sum = i
+  i += 1
+end
