@@ -17,8 +17,19 @@ while i <= n do
 end
 
 # N回ゲーム
-
 while i <= N do
   sum = i
   i += 1
 end
+
+# N文字目まで出力
+S.slice(n-1)
+
+# サイコロの裏面
+7-n
+
+# 運賃の計算
+100 + (N * 10)
+
+# 割った余り
+N % M
