@@ -33,3 +33,20 @@ S.slice(n-1)
 
 # 割った余り
 N % M
+
+# leet変換
+s.gsub!(/A/,'4')
+
+【文字の置き換え】
+gsubは正規表現にマッチした部分をすべて変換するメソッド
+string = "ruby ruby ruby"
+puts string.gsub(/ruby/, 'python')
+
+gsubの破壊的メソッドがgsub!
+string = "ruby ruby ruby"
+string.gsub!(/ruby/, 'python')
+puts string
+
+# 点数の計算
+input.split(" ")
+score[0].to_i + score[1].to_i + score[2].to_i
