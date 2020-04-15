@@ -1,5 +1,8 @@
 #progateでrailsの復習
 
+2020.4.15
+
+
 2020.4.14
 ・フォームの送信先のURLを設定するには、form_tagを利用。<br>
  <%= form_tag("送信先URL") do %><br>
