@@ -1,5 +1,8 @@
 #progateでrailsの復習
 
+2020.4.16<br>
+・before_actionを用いてのアクセス制限
+
 2020.4.15<br>
 ・imegeuploderを使わない画像のDB保存<br>
 1)画像の送信】※view<br>
