@@ -1,5 +1,14 @@
 #progateでrailsの復習
 
+2020.4.18<br>
+いいね機能 likesテーブル、コントローラー<br>
+gem bcrypt ※has_secure_passwordメソッドは、passwordが存在するかどうかを自動的にチェックしてくれるため、続けてpasswordカラムのバリデーションを削除<br>
+has_secure_passwordメソッドを有効にすると、authenticateメソッドを使えるようになります。authenticateメソッドは渡された引数を暗号化し、password_digestの値と一致するかどうかを判定してくれます。
+
+2020.4.17<br>
+whereメソッド　ある条件に合致する「複数の」データを取得する<br>
+find_by　ある条件に合致する「１つの」データを取得する
+
 2020.4.16<br>
 ・before_actionを用いてのアクセス制限
 
