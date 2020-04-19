@@ -133,3 +133,10 @@ nums = gets.split.map(&:to_i)
 
 少数の計算の答えを整数で返す場合、式にto_iメソッドをつける<br>
 puts (p + (p * y)).to_i - (p + (p * x)).to_i
+
+# 区切り文字の統一
+
+文字列（二文字以上）の出現回数を数える<br>
+.count
+.scan 一致する文字列を抽出して配列にする<br>
+ →s.scan('ruby').length　※lengthメソッドで配列の中身を数える
