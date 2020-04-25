@@ -104,4 +104,96 @@ while ($i <= 100) {<br>
 }
 
 ## break文
-現在のループを強制的に中断する命令 if文などの条件文と組み合わせて利用する
+現在のループを強制的に中断する命令 if文などの条件文と組み合わせて利用する<br>
+ex)<br>
+for ($i = 1; $i <= 100; $i++) {<br>
+  if ($i > 10) {<br>
+    break;<br>
+  }<br>
+  echo ＄i<br>
+}
+
+## continue文
+現在の周だけをスキップし、ループそのものは継続して実行. 
+for ($i = 1; $i <= 100; $i++) {<br>
+  if ($i % 3 == 0) {<br>
+    continue;<br>
+  }<br>
+  echo ＄i<br>
+}
+
+## foreach文
+配列または連想配列に対して、先頭のデータから順に繰り返し処理を行うための命令<br>
+
+foreach (配列 as 値変数) {<br>
+  繰り返したい処理;<br>
+}
+
+foreach (配列 as キー変数 => 値変数) {<br>
+  繰り返したい処理;<br>
+}
+
+# 関数
+## 組み込み関数
+strlen(引数)　文字列の文字数を返す<br>
+count(引数)　配列の要素の数を返す<br>
+rand(数値,数値)　１つ目の引数と、２つ目の引数の間のランダムな整数を返す
+
+## 関数を自作する
+function 関数名(仮引数){ 処理 }<br>
+※呼び出しは関数名(引数)
+
+## 戻り値
+関数は値を「返す」ことができて、この値のことを戻り値と呼ぶ。関数を実行した結果、その関数実行部分が戻り値に置き換わるというイメージ。<br>
+戻り値は「return」で指定
+
+# formタグ
+<form action="url" method="get/post"><br>
+  フォームの内容<br>
+</form><br>
+
+## 1行のテキストボックス
+<input type="text" name="データベース用の名前"><br>
+<input>タグは閉じタグが必要ない
+
+## 改行含むテキストボックス
+<textarea name="データベース用の名前"></textarea>
+
+## 送信ボタン
+<input type="submit" value="ボタンに表示される値">
+
+## フォームのデータを受け取る
+$_POST<br>
+「$_POST」は連想配列。<input>と<textarea>のname属性に指定した値を入れることで、それぞれの送信した値を受け取ることができる
+
+## セレクトボックス
+セレクトボックスをつくるには<select>タグの中に<option>タグを並る。
+すると<option>タグの中身が選択肢として表示される。
+
+セレクトボックスの値の渡し方<br>
+<select>タグに「$_POST」で値を受け取るためのname属性を指定。<br>
+<option>タグのvalue属性が送信される値。
+
+ex)<br>
+<select name="fruit"><br>
+  <option value="apple">りんご</option><br>
+</select><br>
+
+## 繰り返し処理と変数展開を用いて多数のoptionタグを作る。
+<?php <br>
+  for ($i = 6; $i <= 100; $i++) {<br>
+    echo "<option value='{$i}'>{$i}</option>";<br>
+  }<br>
+?><br>
+
+変数展開を用いる際はダブルクォーテーションで囲むように。
+
+## foreach文と文字列の連結を用いて、配列$typesのoptionを表示
+<select name="category"><br>
+  <option value="未選択">選択してください</option><br>
+  <?php<br>
+    foreach ($types as $type) {<br>
+      echo "<option value='{$type}'>{$type}</option>";<br>
+    }<br>
+  ?><br>
+</select>
