@@ -285,3 +285,5 @@ indexメソッド<br>
 入力された値を配列に。その後、countメソッド。<br>
 array = [d_1, d_2, d_3, d_4, d_5, d_6, d_7]<br>
 puts array.count('no')
+
+ # 雨と晴れの記録
