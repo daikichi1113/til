@@ -198,3 +198,66 @@ ex)<br>
     }<br>
   ?><br>
 </select>
+
+# クラスとインスタンス
+## クラスの定義
+「class クラス名」と定義し、「{}」の間に、そのクラスの内容を書く<br>
+
+## インスタンスの生成
+new クラス名()<br>
+$変数名 = new クラス名()」のようにすることで生成したインスタンスを変数に代入<br>
+インスタンスの生成はクラスの外で.
+
+# プロパティとメソッド
+## プロパティ
+プロパティとはインスタンスが持つデータのこと<br>
+定義 public $プロパティ名<br>
+プロパティへのアクセス インスタンス->プロパティ名（プロパティ名に$は不要）<br>
+
+例）<br>
+$menu = new Menu();<br>
+$menu->プロパティ名 = 'value';  *プロパティに値をセット<br>
+echo $menu->プロパティ名;  *セットした値にアクセス
+
+## メソッド
+メソッドはインスタンスに関連する処理（関数）のこと.それぞれのインスタンス固有<br>
+定義　public function メソッド名(){処理}<br>
+呼び出し　インスタンス->メソッド名()
+
+# $this
+メソッド内でインスタンスのプロパティやメソッドにアクセスしたい時には「$this」という特殊な変数を用いる<br>
+$thisはクラス内のメソッドの定義の中でのみ使用できる。<br>
+$thisはメソッドが呼ばれた時に、そのメソッドを呼び出しているインスタンスに置き換えられる<br>
+
+# コンストラクタ
+__construct *アンダーバー２つで始まる<br>
+インスタンスの生成時に呼ばれるメソッドのこと<br>
+public function __construct() {処理;}
+
+## コンストラクタと引数/コンストラクタとプロパティ
+__constructメソッドは引数をとることができる<br>
+__constructメソッド内で、$thisを用いてインスタンスのプロパティに値をセットすることができる<br>
+
+例）<br>
+<?php<br>
+class Menu {<br>
+  public $name;<br>
+
+  public function __construct($name) {<br>
+    $this->name = $name;<br>
+  }<br>
+  
+  public function hello() {<br>
+    echo '私は'.$this->name.'です';<br>
+  }
+}
+
+$curry = new Menu('CURRY');<br>
+$pasta = new Menu('PASTA');<br>
+
+$curry->hello();<br>
+echo '<br>';<br>
+$pasta->hello();<br>
+
+?><br>
+
