@@ -270,6 +270,20 @@ PHPのコードを埋め込むことで、HTMLのコードとPHPのコードを�
 foreach文の「{」の代わりに「:」、「}」の代わりに「endforeach」と記述し、その間に処理を書く。<br>
 この処理部分にはHTMLのタグを書くことができるので便利。<br>
 
+<?php foreach ($menus as $menu): ?>
+ <h3><?php echo $menu->name ?></h3>
+<?php endforeach ?>
+
 ## if文、for文、while文や、witch文をHTMLに埋め込む
 それぞれ「endif」、「endfor」、「endwhile」、「endswitch」を使って書く
 
+# require_once
+「require_once」を用いると別のphpファイルを読み込むことができる<br>
+require_onceで読み込んだファイルで定義されているクラスや変数をrequire_onceを記述したファイル内で使うことができる<br>
+
+<?php require_once('data.php') ?>
+
+# 画像表示
+
+imageプロパティの値は<img>タグのsrc属性に指定するため、クォーテーションの中に埋め込む。<br>
+また、echoをしないとphpの処理の結果が出力されず、HTMLに反映されないので注意<br>
