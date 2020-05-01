@@ -261,3 +261,15 @@ $pasta->hello();<br>
 
 ?><br>
 
+# HTMLとPHP
+## HTMLにPHPのコードを埋め込む
+PHPのコードを埋め込むことで、HTMLのコードとPHPのコードを切り分けることができ、見やすくなる<br>
+<p><?php echo $curry->name ?></p>
+
+## foreach文をHTMLに埋め込む
+foreach文の「{」の代わりに「:」、「}」の代わりに「endforeach」と記述し、その間に処理を書く。<br>
+この処理部分にはHTMLのタグを書くことができるので便利。<br>
+
+## if文、for文、while文や、witch文をHTMLに埋め込む
+それぞれ「endif」、「endfor」、「endwhile」、「endswitch」を使って書く
+
