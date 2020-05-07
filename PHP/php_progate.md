@@ -275,7 +275,9 @@ foreach文の「{」の代わりに「:」、「}」の代わりに「endforeach
 <?php endforeach ?>
 
 ## if文、for文、while文や、witch文をHTMLに埋め込む
-それぞれ「endif」、「endfor」、「endwhile」、「endswitch」を使って書く
+それぞれ「endif」、「endfor」、「endwhile」、「endswitch」を使って書く<br>
+※elseを用いる場合はif():~else:~endif<br>
+注）//elseの後に:が必要
 
 # require_once
 「require_once」を用いると別のphpファイルを読み込むことができる<br>
@@ -393,7 +395,8 @@ if($coffee instanceof Drink);<br>
 
 # 子クラスとアクセス権(protected)
 子クラスから親クラスで定義したプロパティにアクセスしたい場合は、そのプロパティのアクセス権を「protected」にする<br>
-アクセス権がprotectedのプロパティには、そのクラス内からと、そのクラスを継承している子クラス内からのみアクセスすることができる
+アクセス権がprotectedのプロパティには、そのクラス内からと、そのクラスを継承している子クラス内からのみアクセスすることができる<br>
+parent::__construct($name, $price, $image);
 
 # アクセス権まとめ
 ・public: どこからでもアクセス可能<br>
