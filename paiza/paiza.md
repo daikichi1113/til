@@ -287,3 +287,19 @@ array = [d_1, d_2, d_3, d_4, d_5, d_6, d_7]<br>
 puts array.count('no')
 
  # 雨と晴れの記録
+
+ # 画面の残り
+
+ # Aの個数
+.count('A')
+
+# 初詣で
+L = 'A'*i[0]
+M = 'B'*i[1]
+N = 'A'*i[2]
+puts L+M+N
+
+# お菓子のプレゼント
+
+# 足りないカード
+.include?
