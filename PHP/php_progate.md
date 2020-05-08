@@ -407,3 +407,26 @@ parent::__construct($name, $price, $image);
 オーバーライドの際に親クラスで定義したメソッドを呼び出したいとき<br>
 parent::メソッド名 <br>
 記述した場所で、親クラスのメソッドが実行
+
+# クエリ情報
+URLの末尾の「?」以降に「キー名=値」の形で簡単な情報をのせることができる。これをクエリ情報といい、クエリ情報を用いてリンク先のページに情報を渡す（送信する）ことができる<br>
+クエリ情報を用いると、show.phpがどのメニューの詳細ページを表示するべきかわかる<br>
+echoしないとURLに反映されない<br>
+ex)<a href="show.php?name=<?php echo $menu->getName() ?>">
+
+# クエリ情報を受け取る($_GET)
+$_GETにはクエリ情報が連想配列として入っている。よって、$_GET['キー名']のように値を取り出せる<br>
+ex)$menuName = $_GET['name'] 
+
+# showページの中身
+## 特定のインスタンスを取得
+$menus = array($curry,$pasta,...)<br>
+$menu = Menu::findByName($menus, 'CURRY');
+
+## findByNameメソッドの定義
+nameプロパティの値を用いて、配列$menusから特定のMenuインスタンスを取得するクラスメソッド<br>
+public static function findByName($menus, $name)<br>
+配列$menusの中からnameプロパティが$nameと一致するものを探し、そのインスタンスを戻り値とする
+
+## returnの性質２
+戻り値を指定するだけでなく、returnが呼ばれた部分で関数やメソッドの処理を終了させる
