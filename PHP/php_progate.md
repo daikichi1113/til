@@ -306,6 +306,9 @@ private
 ## ゲッター
 プロパティの値を返すだけのメソッド<br>
 ゲッターは「getプロパティ名」のように命名するのが一般的
+  public function getName() {
+    return $this->name;
+  }
 
 ## セッター
 プロパティの値を変更するメソッド<br>
