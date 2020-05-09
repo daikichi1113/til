@@ -433,3 +433,31 @@ public static function findByName($menus, $name)<br>
 
 ## returnの性質２
 戻り値を指定するだけでなく、returnが呼ばれた部分で関数やメソッドの処理を終了させる
+
+ # id
+ ## idプロパティの値
+ 生成されたインスタンスの数を管理し、その数を用いてidプロパティに適した値を入れる<br>
+<?php
+class User {
+  // $idというprivateなプロパティを定義
+  private $id;
+
+  // $countクラスプロパティを初期値を数値の0として定義
+  private static $count = 0;
+  
+  public function __construct() {
+    // クラスプロパティ$countの値に1を足す
+    self::$count++;
+    
+    // idプロパティにクラスプロパティ$countの値を代入
+    $this->id = self::$count;
+    
+  }
+  
+  // getIdメソッドを定義
+  public function getId() {
+    return $this->id;
+  }
+
+## idで紐付ける
+idを用いてインスタンス紐付けることで確実に特定できる
