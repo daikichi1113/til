@@ -325,3 +325,46 @@ puts L+M+N
 文字列の右から数えてn番目　文字列[-n]
 
 # 先生の宿題
+
+# 達成の確認
+
+# ブラックジャック
+num = gets.split.map(&:to_i)
+
+# おうむ返し
+num = gets.split.map(&:to_i)
+
+for i in 1..count
+ line = gets
+ puts line
+end
+
+# 数字の取得
+文字列.delete（"^0-9") ＊数字以外の文字列を消す
+
+※特定の種類の文字をすべて消す .delete
+※正規表現で「数字以外」　[^0-9]
+
+# 文字をくっつける
+count = gets.to_i
+lun = ""
+for i in 1..count
+ line = gets.chomp
+ lun = "#{lun}#{line}"
+end
+puts lun
+
+# 花粉症でつらい
+if N % M == 0
+    puts N / M
+else
+    puts (N / M) + 1
+end
+
+# 薬の効き目
+num = gets.to_i
+if 24 % num == 0
+    puts 24 / num
+else
+    puts 24 / num + 1
+end
