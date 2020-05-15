@@ -1,0 +1,2 @@
+ターミナル
+mkdir nuxt-project
