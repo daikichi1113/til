@@ -308,3 +308,143 @@ https://vuex.vuejs.org/ja/
 *アクション(actions) 外部APIとの通信を行い、ミューテーションを呼び出す。外部APIとの非同期処理が必要なときはここに置く。
 
 *ミューテーション(Muttions) Vuexのストアの状態を唯一変更できる
+
+## ストアの作成
+storeディレクトリにindex.jsを作成する
+
+import Vuex from 'vuex' *Vuexのインポート
+
+const createStore = () => { *ストア作成はアロー関数を用いる
+  return new Vuex.Store({
+    state: function() { *stateの値は常にfunctionにする
+      return {　*使用する値をオブジェクトにして返す
+        message: 'Hello Vuex' 
+      }
+    }
+  })
+}
+
+export default createStore　＊エクスポート
+
+
+### アロー関数
+ES6から導入された新しい書き方
+function()
+↓
+()=>
+
+### ストア情報の表示
+例　<p>{{ $store.state.message }}</p>
+Vuex.Storeのstateで用意したmessageの値を呼び出す
+
+## ミューテーションの利用（ストアの値をコンポーネント側から変更）
+https://vuex.vuejs.org/ja/guide/mutations.html
+
+stateの値を変更する場合
+ストア側　値の操作を行う処理を用意
+コンポーネント側　上記の処理を呼び出す
+
+index.js(ストア側)
+const createStore = () => {
+  return new Vuex.Store({
+    state: function() {
+      return {
+        message: 'Hello Vuex'
+      }
+    },
+    mutations: {
+      updateMessage: function(state) {
+        state.message = 'Updated!'
+      }
+    }
+  })
+}
+
+index.vue(コンポーネント側)
+<template>
+  <div class="container">
+    <div>
+      <p>{{ $store.state.message }}</p>
+      <button v-on:click="$store.commit('updateMessage')">Update</button>
+    </div>
+  </div>
+</template>
+
+１）コンポーネント側でボタンをおしてストアのupdateMessageミューテーションを呼び出す
+２）updateMessageの処理を行いstate.massageを上書きする
+
+＊<button>タグは、ボタンを作成する際に使用
+＊v-on
+＊commitメソッド/ミューテーションのタイプを指定して store.commit を呼び出す
+
+### イベントハンドリング
+v-onディレクティブ
+DOM イベントの購読、イベント発火時の JavaScript の実行が可能になる。
+
+例）
+<button v-on:click="counter += 1">Add 1</button>
+
+## ミューテーションの値渡し
+コミットメソッドの第二引数に渡したい値を入れて、ミューテーションがわの第二引数で値を受け取る
+
+index.vue
+<button v-on:click="$store.commit('updateMessage', 'commit with payload')">Update</button>
+
+index.js
+mutations: {
+  updateMessage: function(state, payload) {
+    state.message = payload
+  }
+}
+
+### payload
+
+
+## アクションの利用
+アクションはミューテーションと似ているが、下記の点で異なる
+
+・状態を変更するのではなく、context.commit を呼び出すことでミューテーションをコミットする。
+・任意の非同期処理を含むことができる
+
+また、アクションは store.dispatch がトリガーとなって実行される
+
+
+例）
+●index.jsでactionsを設定
+},
+actions: {
+  アクション名(context) {
+    context.commit('ミューテーション名', 'commit with payload')
+  }
+}
+
+●index.vueで実行
+<button v-on:click="$store.dispatch('アクション名')">dispatch</button>
+
+## アクションに値を渡す
+index.vue
+例）
+<button v-on:click="$store.dispatch('updateMessageAction', 'dispatch with payload')">dispatch</button>
+
+dispatchメソッドの第２引数に値をいれる
+
+index.js
+例）
+actions: {
+  updateMessageAction(context, payload) {
+    context.commit('updateMessage', payload)
+  }
+}
+
+actionの第２引数にpayload
+commitメソッドの第２引数にpayload
+
+## モジュールモードの利用
+複数のファイルに記述できる
+
+クラシックモードからモジュールモードへの移行はストアの記述方法が変更となる
+
+### モジュールモード動作の条件
+・index.jsがストアオブジェクトをexportしない
+または
+・index.jsがstoreフォルダ配下に存在しない
