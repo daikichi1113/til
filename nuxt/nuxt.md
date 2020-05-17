@@ -81,7 +81,7 @@ export default {
 \ は　option + ¥
 
 # ビュー
-## テンプレートレイアウト
+## アプリテンプレートレイアウト
 .nuxt/view/app.template.html *.nuxtフォルダ(隠しフォルダ)の中
 
 ※テンプレートレイアウト（app.template.html）をカスタマイズしたい場合
@@ -99,10 +99,10 @@ noscriptとは、scriptタグと一緒に使用し、scriptタグに対応して
   <p>スクリプトが実行されない場合</p>
 </noscript>
 
-# デフォルトレイアウト
+## デフォルトレイアウト
 ページの基本的なレイアウトを定義する
 
-## layouts/default.vue
+### layouts/default.vue
 default.vue　レイアウトが明示的に指定されていない全てのページに使用される
 
 <template> ※コンポーネントの基本となるプロパティ
@@ -116,7 +116,7 @@ default.vue　レイアウトが明示的に指定されていない全てのペ
 </style>
 
 
-## 関係性
+### 関係性
 app.html　＊htmlの大枠を記述
 :
 layouts/default.vue　＊デフォルトのレイアウト、サイト共通のスタイルなど
@@ -142,3 +142,169 @@ pages/index.vue など
 </template>
 
 ## エラーページのカスタマイズ
+/layoutsにerror.vueを作成
+
+例
+
+<template>
+  <div>
+    <h1 v-if="error.statusCode === 404">error! 404</h1>
+  </div>
+</template>
+
+<script>
+  export default {
+    props: ['error']
+  }
+</script>j
+
+＊error.vueには<nuxt />は含んではいけない
+
+### props(コンポーネントに自由にデータを渡す)
+親から子に自由にデータを渡せるもの
+
+### フロントエンドの描画を条件分岐(表示／非表示)
+●v-if, v-else-if, v-else
+v-if="条件"と書くことで条件の真偽によりその要素を表示するかしないかをコントロール
+
+
+## HTMLヘッダーのカスタマイズ
+.nuxt.config.js の　headタグをカスタマイズ
+
+linkタグは配列になっている
+
+
+# 非同期データ通信
+## axios
+axiosとはブラウザやnode.js上で動くPromiseベースのHTTPクライアント。非同期にHTTP通信を行いたいときに容易に実装できる.
+javascriptの一般的なライブラリ
+Vue.js（nuxt.js）では非同期通信を行うのにaxiosを使うことが推奨されている
+
+インストールコマンド　npm install axios　＊プロジェクトディレクトリで実行
+
+*インストールされているパッケージ情報を確認するときはpackage.jsonを参照
+
+### Promiseと.then()
+非同期処理の結果を、成功（resolve） または、失敗（reject）で返すオブジェクト。以下のような非同期処理を簡潔に書ける。
+
+・非同期処理の成功、失敗の処理を分岐する。
+・複数の非同期処理を順番に実行したり、並行して実行する。（直列・並列）
+
+then() メソッドは Promise を返す。最大2つの引数、 Promise が成功した場合と失敗した場合のコールバック関数を取る。
+
+## データを取得
+<template>
+  <div class="container">
+    {{ users }}
+  </div>
+</template>
+
+<script>
+const axios = require('axios')
+let url = 'https://jsonplaceholder.typicode.com/users'
+
+export default {
+  asyncData({ params }) {
+    return axios.get(url)
+      .then((res) => {
+        return { users: res.data }
+      })
+  }
+}
+</script>
+
+＊asyncDataメソッド／Nuxt.jsのメソッド。コンポーネントを初期化する前に非同期の処理を行うようにする。
+
+＊axios.get(url)／APIからのデータ取得をリクエスト。レスポンスを受け取った段階で.thenメソッドが呼ばれる。
+
+＊(res)／サーバーからのレスポンスデータが入っている
+
+＊res.data／jsonオブジェクトが入っている。サーバーから取得したjsonテキストをaxiosがjavascriptオブジェクトに変換している
+
+＊{ users: res.data }　／　res.dataにusersという名前をつける
+
+### １つのデータを取得
+<template>
+  <div class="container">
+    {{ users[0].id }}, {{ users[0].name }}
+  </div>
+</template>
+
+※データを取り出すにはインデックスを指定する
+
+### 複数データを取得(リストレンダリング（v-for 配列の繰り返し）)
+<template>
+  <div class="container">
+    <ul>
+      <li v-for="user in users" :key= user.id >
+        {{ user.id }}, {{ user.name }}
+      </li>
+    </ul>
+  </div>
+</template>
+
+＊　リストレンダリング（v-for 配列の繰り返し）
+v-for="変数 in 配列" :key="変数.id"
+
+## エラーハンドリングの実装
+export default {
+  asyncData({ params, error }) {
+    return axios.get(url)
+      .then((res) => {
+        return { users: res.data }
+      })
+      .catch((e => {
+        error({ users: e.response.status, message: e.message })
+      }))
+  }
+}
+
+.catchメソッド　
+
+e 　変数（エラー情報が入っている）
+
+エラーメソッド（エラーページを表示する）
+error({ users: e.response.status, message: e.message })
+
+e.response.status　ステータスコード
+
+
+# アセット
+## 画像の表示
+assetsディレクトリに保存して呼び出す　~/assets/ファイル名
+
+## 静的なファイルの公開
+favicon.ico、robots.txt、sitemap.xmlなど<br>
+静的なファイルを公開するにはstaticディレクトリ内にファイルを作成する<br>
+ホームディレクトリ/ファイル名で表示できる
+
+# Vuex
+Vue.jpのために開発されたアプリケーションの状態(state)管理を行うライブラリ。複数のコンポーネントで使える値などをストアと呼ばれる保管場所でまとめて管理する。
+
+１つのアプリケーションが持つストアは１つ。
+各コンポーネントからstateを直接操作することはルール違反。ミューテーションを経由する
+
+
+## 2つのモジュールモード
+クラシックモード（ベーシック）<br>
+モジュールモード（大規模開発）
+
+## Vuex とは何か？
+https://vuex.vuejs.org/ja/
+
+## データフロー
+コンポーネント
+: （リクエスト）
+アクション ◀︎　▶︎　外部API
+:
+ミューテーション
+:
+ステート
+:
+コンポーネント
+
+*ステート(state) アプリケーションの状態を保持.ストア
+
+*アクション(actions) 外部APIとの通信を行い、ミューテーションを呼び出す。外部APIとの非同期処理が必要なときはここに置く。
+
+*ミューテーション(Muttions) Vuexのストアの状態を唯一変更できる
