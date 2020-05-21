@@ -408,3 +408,20 @@ str = gets.split.map{|s| s[0]}.join('')
 # ○○の秋
 文字列.sub(/noaki/, '')
 subを使った削除
+
+# 入学試験
+## 普通に記述
+number = gets.splits.to_i //得点を配列化
+line = gets.to_i //受けた教科数
+sum_of_number = 0 //合計値用の変数の定義
+
+numbers.each do |number|
+  sum_of_number = sum_of_number + number //順番に足す
+end
+＊繰り返しでsum_of_numberが総得点に
+
+score = sum_of_number / number.lemgth
+*平均点
+
+## 平均点までを１行にまとめてみる
+score = numbers.inject(0){|sum_of_number, number| sum_of_number + number} / numbers.length
