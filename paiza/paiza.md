@@ -425,3 +425,5 @@ score = sum_of_number / number.lemgth
 
 ## 平均点までを１行にまとめてみる
 score = numbers.inject(0){|sum_of_number, number| sum_of_number + number} / numbers.length
+
+# 時間の表記
