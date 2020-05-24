@@ -427,3 +427,8 @@ score = sum_of_number / number.lemgth
 score = numbers.inject(0){|sum_of_number, number| sum_of_number + number} / numbers.length
 
 # 時間の表記
+
+# タイトルの長さ
+改行　\n
+insertメソッド　指定した位置に文字列を挿入する
+文字列.insert(挿入場所, "挿入する文字")
