@@ -432,3 +432,6 @@ score = numbers.inject(0){|sum_of_number, number| sum_of_number + number} / numb
 改行　\n
 insertメソッド　指定した位置に文字列を挿入する
 文字列.insert(挿入場所, "挿入する文字")
+
+# 不思議なタマゴ
+配列の最大値　.max
