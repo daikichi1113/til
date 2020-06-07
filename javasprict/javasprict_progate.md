@@ -495,3 +495,122 @@ import 定数名 from "パッケージ名";
 
 
 # 配列を操作するメソッド
+## pushメソッド
+配列の最後に新しい要素を追加する
+
+配列 = [要素1, 要素2, 要素3]
+配列.push(要素4); *引数の値４が配列に追加される*
+
+例）
+const numbers = [1, 2, 3]
+numbers.push(4);
+
+## コールバック関数
+メソッドの引数に入る関数のこと
+
+## forEachメソッド
+配列の中の要素を1つずつ取り出して、全ての要素に繰り返し同じ処理を行う
+
+配列 = [要素1, 要素2, 要素3]
+              ↓配列の要素が１つずつ引数として呼ばれる
+配列.foreach((引数)=> {処理})
+             ↑この部分はアロー関数。
+              また、このアロー関数はforEachの引数である。※引数に入る関数＝「コールバック関数」
+
+例）
+const numbers = [1, 2, 3]
+numbers.forEach((number)=> {
+  consol.log(number);
+  })
+*結果*
+１
+２
+３
+
+## findメソッド
+コールバック関数の処理部分に記述した条件式に合う「1つ目の要素」を配列の中から取り出す。
+処理の返り値があるので、代入する定数（変数）を定義する。
+
+### 例１：return
+const numbers = [1, 3, 5, 7];
+
+const findNumber = numbers.find((number) => {
+                                  ↑配列numbersの値を引数にしたアロー関数
+            ↑処理の返り値を定数に代入
+  return number > 3; *条件式*
+});
+
+console.log(findNumber);
+
+*結果*
+5
+
+### 例２：オブジェクトのプロパティを条件式に使用するreturn
+const animals = [{id:1, name:"ライオン"}, {id:2, name:"ぞう"}]
+
+const findAnimals = animals.find((animal) => {
+  return animal.id === 1;
+})
+
+consol.log(findAnimals);
+
+*結果*　ライオン
+
+## filterメソッド
+記述した条件に合う要素を「全て取り出して新しい配列を作成する」メソッド
+
+### 例１：return
+const numbers = [1, 3, 5, 7];
+
+const findNumber = numbers.filter((number) => {
+  return number > 3; *条件式*
+});
+
+console.log(findNumber);
+
+*結果*
+[5, 7]
+
+### 例２：オブジェクトのプロパティを条件式に使用するreturn
+const animals = [{id:1, name:"ライオン"}, {id:2, name:"ぞう"}, {id:3, name:"キリン"}]
+
+const findAnimals = animals.filter((animal) => {
+  return animal.id > 1;
+})
+
+consol.log(findAnimals);
+
+*結果*　[{id:2, name:"ぞう"}, {id:3, name:"キリン"}]
+
+## mapメソッド
+配列内のすべての要素に処理を行い、その戻り値から新しい配列を作成する
+
+### 例１：return
+const numbers = [1, 3, 5];
+
+const doubleNumber = numbers.map((number) => {
+  return number * 2; *条件式*
+});
+
+console.log(doubleNumber);
+
+*結果*
+[2, 6, 10] *全ての要素を２倍
+
+### 例２：オブジェクトのプロパティを条件式に使用するreturn
+const names = [
+  {firstName:komori, lastName:daigo},
+  {firstName:komori, lastName:keio}
+]
+
+const fullName = names.map((name) => {
+  return name.fiestName + name.lastName
+})
+
+console.log(fullName)
+
+*結果*
+["komoridaigo", "komorikeiko"]
+
+# コールバック関数
+
