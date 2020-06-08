@@ -613,4 +613,57 @@ console.log(fullName)
 ["komoridaigo", "komorikeiko"]
 
 # コールバック関数
+JavaScriptでは引数に関数を渡すことができます。引数に渡される関数をコールバック関数と呼ぶ
+
+関数名(引数);
+
+例）
+*callNameという関数*
+const callName = () => {
+  console.log("komori")
+};
+
+*仮引数callbackのcallという関数*
+const call = (callback) => {
+              ↑②関数callNameをcallbackに代入
+  callback();
+  ↑③関数callNameが代入された関数callbackを呼び出し
+}
+
+call(callName);
+     ↑①引数に関数callNameを渡して関数callを呼び出し
+
+## 関数の呼び出し方と渡し方
+関数の呼び出し　関数名();
+コールバック関数を渡す　関数名　*()を付けない*
+
+## コールバック関数を直接定義する
+### 引数で関数を定義する
+関数を直接引数の中で定義することもできる
+
+例）
+*関数を引数の外で定義*
+const callName = () => {
+  console.log("komori")
+};
+
+const call = (callback) => {
+  callback();
+}
+
+call(callName);
+
+↓
+*関数を引数の中で定義*
+const call = (callback) => {
+  callback();
+}
+
+call(callName = () => {
+  console.log("komori")
+});
+
+## コールバック関数で引数を渡す
+
+
 
