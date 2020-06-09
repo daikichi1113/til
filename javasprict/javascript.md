@@ -3,6 +3,10 @@ scriptタグはhtmlのbodyタグの中でもOK.複数あっても良い。
 jsファイルなど別のファイルに記載するときはhtmlで読み込む必要がある。
 jsファイルにはscriptタグ不要
 
+## htmlの直接ブラウザ表示
+HTMLファイルはブラウザにドラックすることで表示できる。
+フレームワークが必要ない場合などに使用。
+
 # console.log
 scriptタグのデバッグでconsole.logを使う場合、検証ツールのコンソールを活用。
 
@@ -18,5 +22,3 @@ scriptタグのデバッグでconsole.logを使う場合、検証ツールのコ
 
 ## イベントハンドラ一覧
 https://phpjavascriptroom.com/?t=js&p=event
-
-
