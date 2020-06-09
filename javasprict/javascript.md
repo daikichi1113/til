@@ -22,3 +22,28 @@ scriptタグのデバッグでconsole.logを使う場合、検証ツールのコ
 
 ## イベントハンドラ一覧
 https://phpjavascriptroom.com/?t=js&p=event
+
+# this
+別のfunctionの関数を使うときは、this.関数()
+
+# document.getElementBy
+
+## .textContent
+
+## .value
+
+# 切り捨て・切り上げ・四捨五入
+// 切り捨て
+var a = Math.floor( 1.5 ) ;
+
+// 切り上げ
+var b = Math.ceil( 1.5 ) ;
+
+// 四捨五入
+var c = Math.round( 1.5 ) ;
+
+# スコープ
+関数A内で定義した変数Aを他の関数Bで使う場合
+
+関数Aの返り値として変数Aをreturn。
+関数B内でthis.関数Aとする
