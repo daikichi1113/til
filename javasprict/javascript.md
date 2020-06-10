@@ -57,3 +57,23 @@ https://www.flatflag.nir87.com/select-2-1240
 # 動的なセレクトボックス
 https://techacademy.jp/magazine/27133
 https://javascript.programmer-reference.com/js-select-prefecture/
+https://javascript.programmer-reference.com/js-selectbox-linkage/
+
+# appendChildメソッド
+https://techacademy.jp/magazine/20820
+
+# イベントドリブンプログラミング
+イベントハンドラ・・・1つの要素、イベントについて１つしか設定できない
+イベントリスナ・・・1つの要素に複数イベントを設定することができる。
+
+対象要素.addEventListener(種類, sampleEvent, false);
+
+function sampleEvent() {
+  
+  //ここに処理を記述する
+  
+}
+
+https://qiita.com/makoto1219/items/0ce5463da09d6c1a44a5
+https://techacademy.jp/magazine/20950
+https://www.sejuku.net/blog/57625
