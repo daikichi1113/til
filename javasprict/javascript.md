@@ -69,11 +69,19 @@ https://techacademy.jp/magazine/20820
 対象要素.addEventListener(種類, sampleEvent, false);
 
 function sampleEvent() {
-  
   //ここに処理を記述する
-  
 }
 
 https://qiita.com/makoto1219/items/0ce5463da09d6c1a44a5
 https://techacademy.jp/magazine/20950
 https://www.sejuku.net/blog/57625
+
+# イベントリスナー内のthis
+イベントリスナーで呼ばれる関数内のthisは、メソッドのthisになるため、そのメソッドが属するオブジェクトを指す。
+そのため、先にthisを退避させ、確保しておく。
+
+例
+var _this = this
+
+詳しくは↓
+http://enlosph.hatenablog.com/entry/2017/01/20/222605
