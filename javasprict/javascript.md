@@ -47,3 +47,13 @@ var c = Math.round( 1.5 ) ;
 
 関数Aの返り値として変数Aをreturn。
 関数B内でthis.関数Aとする
+
+# 文字列を数値に
+Number(変数)
+
+# jQueryでselectタグの値やテキストを取得する
+https://www.flatflag.nir87.com/select-2-1240
+
+# 動的なセレクトボックス
+https://techacademy.jp/magazine/27133
+https://javascript.programmer-reference.com/js-select-prefecture/
