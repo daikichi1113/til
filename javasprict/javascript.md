@@ -89,3 +89,14 @@ http://enlosph.hatenablog.com/entry/2017/01/20/222605
 # 何もしない
  ;
 
+https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/Empty
+
+# 数値かどうか
+typeof
+
+https://www.javadrive.jp/javascript/ope/index15.html
+https://zero-plus-one.jp/javascript/isnumber/
+
+# 数値を通貨に変更
+toLocaleStringメソッド
+https://hacknote.jp/archives/27156/
