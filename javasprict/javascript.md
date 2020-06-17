@@ -100,3 +100,10 @@ https://zero-plus-one.jp/javascript/isnumber/
 # 数値を通貨に変更
 toLocaleStringメソッド
 https://hacknote.jp/archives/27156/
+
+# ページ遷移の値渡し
+https://phpjavascriptroom.com/?t=js&p=location4
+
+# ブラウザバック対策
+https://sevenb.jp/wordpress/ura/2016/02/22/web%E6%88%BB%E3%82%8B%E3%83%9C%E3%82%BF%E3%83%B3%E3%81%A7%E3%83%95%E3%82%A9%E3%83%BC%E3%83%A0%E3%81%8C%E6%AE%8B%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E3%81%AE%E3%81%8C%E5%9B%B0%E3%82%8B%E5%A0%B4/
+
