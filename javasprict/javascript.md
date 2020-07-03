@@ -107,3 +107,28 @@ https://phpjavascriptroom.com/?t=js&p=location4
 # ブラウザバック対策
 https://sevenb.jp/wordpress/ura/2016/02/22/web%E6%88%BB%E3%82%8B%E3%83%9C%E3%82%BF%E3%83%B3%E3%81%A7%E3%83%95%E3%82%A9%E3%83%BC%E3%83%A0%E3%81%8C%E6%AE%8B%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E3%81%AE%E3%81%8C%E5%9B%B0%E3%82%8B%E5%A0%B4/
 
+# div枠全体をリンクする方法
+https://www.ipentec.com/document/html-css-link-entire-div-frame#section_09
+
+<head>
+    <meta charset="utf-8">
+    <title>nagasaki-mc</title>
+    <link rel="stylesheet" type="text/css" href="reset.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <script type="text/javascript">
+        function AboutFrameClick() {
+          document.location.href = "https://nagasaki-mc.hosp.go.jp/about/about.html"
+        }
+    </script>
+</head>
+
+<body>
+  <div onclick="AboutFrameClick()">
+    <h2>病院のご案内</h2>
+    <p>About</p>
+  </div>
+</body>
+
+*aタグではないのでカーソルがポインタにならないので注意。cssで該当classに「cursor: pointer;」記述
+
+
