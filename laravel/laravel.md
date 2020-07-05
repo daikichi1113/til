@@ -4,7 +4,7 @@
 composer create-project laravel/laravel プロジェクト名
 
 ※WEB環境があるところで実行すること<br>
-※インストールが完了するとkeyがコマンドラインに表示されるので、必ずどこかにコピーを取っておくこと。（プロジェクトディレクトリ内のファイルがわかりやすい）
+※ver6以降はappkeyが自動付与される
 
 # ローカルでWEBサーバー起動
 php artisan serve
@@ -13,7 +13,7 @@ php artisan serve
 ## マイグレーションファイルの作成
 php artisan make:migration テーブル名_table
 
-※場所はdatabaseディレクトリ→migrationsディレクトリの中。標準でユーザーとパスワードのマイグレーションファイルが用意されている。
+※場所はdatabaseディレクトリ→migrationsディレクトリの中。標準でusersのマイグレーションファイル、Userモデルが用意されている。
 
 ## 作成したマイグレーションファイルの修正
 public function up()
@@ -27,21 +27,19 @@ public function up()
 
 ※$table->型('カラム名');
 
-# データベース設定
-設定ファイル　config→database.php
+# データベース設定（sqlite）
+.env → DB_CONNECTION=使用するDB名（デフォルトはmysql）
+       DB_DATABASE=絶対パス
 
-１）使用するSQL設定
-'default' => env('DB_CONNECTION', 'mysql'),
+/config/database.php → 'default' => env('DB_CONNECTION', '使用するDB名（デフォルトはmysql),)
 
-デフォルトはmySQL。SQLを変更したい場合はmySQLの部分を書き換える。
-
-２）データベースの設定
-
+/databaseディレクトリの中にdatabase.sqliteファイルを作成
+touch database.sqlite
 
 ## 実行
 php artisan migrate
 
-マイグレートを実行して、以下のエラー分が出た場合
+### マイグレートを実行して、以下のエラー分が出た場合
 
 1)SQLSTATE[42S01]: Base table or view already exists: 1050 Table 〇〇 already exists
 
@@ -67,3 +65,73 @@ https://qiita.com/stone_programer/items/12817f6d804d400e403e
 php artisan make:model 単数形のテーブル名（頭文字は大文字）
 
 例）php artisan make:model Book
+
+
+# Bladeテンプレート
+BladeはシンプルながらパワフルなLaravelのテンプレートエンジン。ビューの中にPHPを直接記述できる。
+
+※全BladeビューはPHPへコンパイルされ、変更があるまでキャッシュされます。つまりアプリケーションのオーバーヘッドは基本的に０です。Bladeビューには.blade.phpファイル拡張子を付け、通常はresources/viewsディレクトリの中に設置します。
+
+## データ表示
+Bladeビューに渡されたデータは、波括弧で変数を囲うことで表示できます。
+
+例）
+Route::get('greeting', function () {
+    return view('welcome', ['name' => 'Samantha']);
+});
+
+Hello, {{ $name }}.
+
+※　Bladeの{{ }}記法はXSS攻撃を防ぐため、自動的にPHPのhtmlspecialchars関数を通されます。
+
+ビューに渡された変数の内容を表示するだけに限られません。PHP関数の結果をechoすることもできます。実際、どんなPHPコードもBladeのecho文の中に書けます。
+
+
+## If文
+
+@if (count($records) === 1)
+    １レコードある！
+@elseif (count($records) > 1)
+    複数レコードある！
+@else
+    レコードがない！
+@endif
+
+## @unlessディレクティブ
+@unless (Auth::check())
+    あなたはログインしていません。
+@endunless
+
+## 認証ディレクティブ
+@authと@guestディレクティブは、現在のユーザーが認証されているか、もしくはゲストであるかを簡単に判定するために使用します。
+
+@auth
+    // ユーザーは認証済み
+@endauth
+
+@guest
+    // ユーザーは認証されていない
+@endguest
+
+
+必要であれば、@authと@guestディレクティブ使用時に、確認すべき認証ガードを指定できます。
+
+@auth('admin')
+    // ユーザーは認証済み
+@endauth
+
+@guest('admin')
+    // ユーザーは認証されていない
+@endguest
+
+
+# route
+## 基本的なルーティング
+一番基本のLaravelルートはURIと「クロージャ」により定義され、単純で記述しやすいルートの定義方法を提供しています。
+
+Route::get('パス', function () {
+    return 'Hello World';
+});
+
+
+# ログイン認証
