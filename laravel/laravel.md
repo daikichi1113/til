@@ -36,6 +36,9 @@ public function up()
 /databaseディレクトリの中にdatabase.sqliteファイルを作成
 touch database.sqlite
 
+# データベース設定（mySQL）
+https://qiita.com/hitochan/items/f5dc22ecbe24a350276a
+
 ## 実行
 php artisan migrate
 
@@ -133,6 +136,8 @@ Route::get('パス', function () {
     return 'Hello World';
 });
 
+## ディレクトリ
+routeディレクトリに４つのphpファイルが存在、WEBアプリの場合はweb.phpなど使い分ける
 
 # ログイン認証
 １）laravel/uiパッケージのインストール
@@ -150,3 +155,12 @@ npm install と npm run dev　の実行
 
 結果：layoutsディレクトリにapp.blade.phpが自動で追加
 　　　authディレクトリとその中身が自動生成
+　　　App\Http\Middlewareにauth
+     viewディレクトリにhome.blade.php追加　※ログイン成功画面
+
+# ミドルウェア
+プリケーションへ送信されたHTTPリクエストをフィルタリングする、便利なメカニズム。
+例えばユーザー認証、CSRF保護など
+app/Http/Middlewareディレクトリに設置される
+
+
