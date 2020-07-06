@@ -135,3 +135,18 @@ Route::get('パス', function () {
 
 
 # ログイン認証
+１）laravel/uiパッケージのインストール
+composer require laravel/ui
+
+２）ログイン／ユーザー登録スカフォールドを生成
+<!-- php artisan ui bootstrap --auth -->
+php artisan ui vue --auth
+<!-- php artisan ui react --auth -->
+
+Please run "npm install && npm run dev" to compile your fresh scaffolding. // コマンドラインに表示される
+
+３）スタイルシートが壊れた場合は、npmから不足するパッケージをインストールすることで修復
+npm install と npm run dev　の実行
+
+結果：layoutsディレクトリにapp.blade.phpが自動で追加
+　　　authディレクトリとその中身が自動生成
