@@ -151,32 +151,61 @@ https://readouble.com/laravel/7.x/ja/blade.html
 ### Laravel/ui のインストール
 composer require laravel/ui
 
+## フロントエンドのスカフォールドをインストール
+// 基本的なスカフォールドを生成
+php artisan ui bootstrap
+php artisan ui vue
+php artisan ui react
+
+// ログイン／ユーザー登録スカフォールドを生成
+・ユーザー登録機能
+・ログイン機能
+・パスワードリセット機能
+・ログイン情報保存機能
+・バリデーション(入力の有無、メールアドレスかどうかの判定)
+がまとめて追加されている状態になる
+
+php artisan ui bootstrap --auth
+php artisan ui vue --auth
+php artisan ui react --auth
+
+## npm install
+npm install
+
+npm installを実施するタイミングでnode_modulesフォルダが生成
+ッケージが更新されたりする場合にデータが上書きされてしまいますので、なるべくnode_modulesフォルダ内のファイルには手を入れない
+
+## Font awesomeの追記
+resources/sass/app.scssファイルを編集
+
+/* Fonts */
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+/* Variables */
+@import 'variables';
+
+$fa-font-path: "../webfonts"; /* 追記 */
+
+/* Bootstrap */
+@import '~bootstrap/scss/bootstrap';
+
+@import "~@fortawesome/fontawesome-free/scss/fontawesome"; /* 追記 */
+@import '~@fortawesome/fontawesome-free/scss/solid'; /* 追記 */
+@import '~@fortawesome/fontawesome-free/scss/regular'; /* 追記 */
+@import '~@fortawesome/fontawesome-free/scss/brands'; /* 追記 */
+
+## ビルドコマンド
+npm run dev
+
+npm run dev ・・開発用にビルド
+npm run watch ・・常時ビルド
+npm run prod ・・本番用にビルド
 
 # モデル
 ## model作成
 php artisan make:model 単数形のテーブル名（頭文字は大文字）
 
 例）php artisan make:model Book
-
-
-# Bladeテンプレート
-BladeはシンプルながらパワフルなLaravelのテンプレートエンジン。ビューの中にPHPを直接記述できる。
-
-※全BladeビューはPHPへコンパイルされ、変更があるまでキャッシュされます。つまりアプリケーションのオーバーヘッドは基本的に０です。Bladeビューには.blade.phpファイル拡張子を付け、通常はresources/viewsディレクトリの中に設置します。
-
-## データ表示
-Bladeビューに渡されたデータは、波括弧で変数を囲うことで表示できます。
-
-例）
-Route::get('greeting', function () {
-    return view('welcome', ['name' => 'Samantha']);
-});
-
-Hello, {{ $name }}.
-
-※　Bladeの{{ }}記法はXSS攻撃を防ぐため、自動的にPHPのhtmlspecialchars関数を通されます。
-
-ビューに渡された変数の内容を表示するだけに限られません。PHP関数の結果をechoすることもできます。実際、どんなPHPコードもBladeのecho文の中に書けます。
 
 
 ## If文
