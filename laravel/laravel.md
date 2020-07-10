@@ -201,11 +201,34 @@ npm run dev ・・開発用にビルド
 npm run watch ・・常時ビルド
 npm run prod ・・本番用にビルド
 
+# ルーティング
+## ルーティングファイル
+web.php　Laravelで通常のブラウザからのHTTPリクエストに対するルーティング設定を行う場合（WEB）
+api.php　API通信などをルーティングする
+
+## ルート定義メソッド
++------------+---------------------+----------+----------------+---------------------------+
+| method     | uri                 | action   | route name     | explanation               |
++------------+---------------------+----------+----------------+---------------------------+
+| GET        | /tasks              | index    | tasks.index    | データの一覧を取得する処理    |
+| GET        | /tasks/create       | create   | tasks.create   | データ追加画面へ移動する処理   |
+| POST       | /tasks              | store    | tasks.store    | dbへデータを追加する処理      |
+| GET        | /tasks/{task}       | show     | tasks.show     | データを1件取得する処理       |
+| GET        | /tasks/{task}/edit  | edit     | tasks.edit     | データ更新画面へ移動する処理   |
+| PUT/PATCH  | /tasks/{task}       | update   | tasks.update   | dbのデータを更新する処理      |
+| DELETE     | /tasks/{task}       | destroy  | tasks.destroy  | dbのデータを削除する処理      |
++------------+---------------------+----------+----------------+---------------------------+
+
 # モデル
 ## model作成
 php artisan make:model 単数形のテーブル名（頭文字は大文字）
 
 例）php artisan make:model Book
+
+
+
+
+
 
 
 ## If文
