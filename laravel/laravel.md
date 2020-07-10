@@ -73,7 +73,7 @@ https://github.com/minoryorg/laravel-resources-lang-ja/blob/master/resources/lan
 
 # マイグレーション
 ## マイグレーションファイルの作成
-php artisan make:migration テーブル名_table
+php artisan make:migration cleate_テーブル名_table
 
 ※場所はdatabaseディレクトリ→migrationsディレクトリの中。
 Laravelではインストールした時点であらかじめ、
