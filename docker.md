@@ -151,3 +151,33 @@ docker pull
 
 
 # コンテナをもっと理解する
+
+## docker run を詳しく解説
+docker run {image}
+ = docker create（コンテナを作る） + docker start（コンテナのデフォルトコマンドを実行）
+
+## コマンドの上書き
+docker run {image} {command}
+{command}を変えて実行することで、上書きができる
+
+## -it
+docker run -it ubuntu bash
+
+-it
+※２つのコマンドオプションをくっつけている
+ -i:インプット可能
+ -t:表示が綺麗になる
+
+bash を使うために必要なコマンドオプション、という認識で良い
+
+## コンテナの削除
+１）コンテナを止める
+docker stop {container}
+
+２）コンテナを削除する
+docker rm {container} : 削除
+docker system prune : 止まっているコンテナを全削除
+
+dockerを使っているとコンテナが溜まりやすいので、定期的に削除しておくと良い
+
+## コンテナのファイルシステムの独立性
