@@ -173,6 +173,7 @@ bash を使うために必要なコマンドオプション、という認識で
 ## コンテナの削除
 １）コンテナを止める
 docker stop {container}
+※{container}をスペースで区切流ことで、複数同時に止めることができる.rmも
 
 ２）コンテナを削除する
 docker rm {container} : 削除
@@ -181,3 +182,26 @@ docker system prune : 止まっているコンテナを全削除
 dockerを使っているとコンテナが溜まりやすいので、定期的に削除しておくと良い
 
 ## コンテナのファイルシステムの独立性
+同じimageから複数のコンテナを作成しても、それぞれのコンテナは独立している
+
+## コンテナ名を指定してrunする
+docker run --name {name} {image}
+
+どんな時に使うとよい？
+・起動させ続けるコンテナを立てる時
+・共有サーバを使うとき
+・他のプログラムで使用するとき
+
+※同じ名前のコンテナは作成できない（エラーになる）
+
+## detachedモードとforegroundモード
+detached mode：コンテナ起動後にdetachする（バックグラウンドで動かす）
+[コマンド]docker run -d {image}
+
+foreground mode：コンテナをExit後に削除する（一回きりのコンテナ）
+　　　　　　　　　　※不要なコンテナがたまらないようにできる
+[コマンド]docker run --rm {image}
+
+注）複数のオプションをつけるとき
+docker run -it -d ubuntu bash
+
