@@ -205,3 +205,17 @@ foreground mode：コンテナをExit後に削除する（一回きりのコン�
 注）複数のオプションをつけるとき
 docker run -it -d ubuntu bash
 
+# Dockerfile
+## Dockerfileとは
+Docker imageの設計書で，DockerfileをビルドすることでDocker imageを作成できる。
+
+Dockerfileというtextファイル。"INSTRUCTION arguments"の形で記載する。
+
+※docker hubからDocker imageをpullした場合は既に作ってある。（docker hubで見ることができる）
+
+実業務ではこのDockerfileを使ってDocker imageやコンテナを作ることが多く，DockerfileをメンテすることがDockerを使いこなすことに繋がる
+
+## Dockerfileを作る
+
+
+
