@@ -240,6 +240,20 @@ RUN touch test
 
 #マークでコメントを書くことができる
 
+### Dockerfileは最後の行に付け加えて更新していく
+Dockerfileに記述された各行は各image layerに値するため，基本はDockerfileを更新する際には最後の行に新しい命令文を追加していく．
+
+WHY?
+途中の行を変えると，そのあとの行のlayerは全て新しいものとみなされ再度layerが作成さるため．
+↓
+Dockerfileが大きくなる。
+↓
+実行するのに時間がかかる。
+↓
+コンテナを更新するたびにrunするので毎回時間がかかってしまう
+
+そのため，基本は最後の行に付け足していって，時間があるときに綺麗にするように心がける
+
 ## build（Dockerfileからdocker imageを作る）
 docker build {ディレクトリ名}　：　ディレクトリ内のDockerfileというファイルを探してビルドする
 ※カレントディレクトリの場合は docker build . 
@@ -265,3 +279,26 @@ docker build -t {IMAGE名} {ディレクトリ名}
 Successfully built 868fd2d6c226
 Successfully tagged new-ubuntu:latest
 
+## ビルドしたDocker imageをrunしてコンテナに入る
+docker run -it image名 bash
+ 
+## Dockerfileからimageを作る利点
+・Dockerfileからimageをbuildする
+　▶︎　Docker fileが存在する = チーム内で設計書を共有できる
+
+・コンテナを直接変更してimageにcommitする
+　▶︎　Docker fileが存在しない = チーム内で設計書を共有できない
+
+簡易図解：
+
+Dockerfile　：　textファイル。Docker imageを作る設計図 
+
+   ↓ build
+
+Docker image　：　コンテナを作るためのもの。携帯して配布できる
+ ↓      ↑
+ ↓ run  ↑
+ ↓      ↑ commit　：　コンテナを更新してDocker imageにすることも可能
+ ↓      ↑
+コンテナ　：　実際に開発したりアプリを実行する場所。
+　　　　　　　docker imageから簡単に作ったり消したりできる
