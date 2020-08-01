@@ -413,7 +413,7 @@ RUN apt-get install -y \
 buildすると上２つのRUNはキャッシュを参照するため実行されない
 追記したRUNだけ実行され、パッケージがインストールされる
 
-・キャッシュが通ることが確認できたので、DockerfileのRUNをまとめる
+・キャッシュが通ることが確認できたので、DockerfileのRUNをまとめてlayerを１つにする
 --
 FROM ubuntu:latest
 RUN apt-get update && apt-get install -y \
@@ -421,6 +421,6 @@ RUN apt-get update && apt-get install -y \
     cvs \    ///パッケージはアルファベット順に並べる
     nginx
 --
-buildしてlayerを１つにする（キャッシュを参照するのでRUNは実行されない）
 
 ## CMD
+
