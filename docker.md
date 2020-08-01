@@ -423,4 +423,21 @@ RUN apt-get update && apt-get install -y \
 --
 
 ## CMD
+CMD:コンテナのデフォルトのコマンドを指定
 
+構文
+CMD["executable(コマンド)","param1(引数2)","param2(引数2)"・・・]
+※引数が必要なときは上記のように記述する
+※Dockerfileの最後に記述する（原則）
+
+例）
+FROM ubuntu:latest
+RUN apt-get update && apt-get install -y \
+    curl \
+    cvs \
+    nginx
+CMD ["ls"]
+
+## RUNとCMDの違い
+RUNはlayerを作る
+CMDはlayerを作らない
