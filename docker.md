@@ -216,6 +216,52 @@ Dockerfileというtextファイル。"INSTRUCTION arguments"の形で記載す�
 実業務ではこのDockerfileを使ってDocker imageやコンテナを作ることが多く，DockerfileをメンテすることがDockerを使いこなすことに繋がる
 
 ## Dockerfileを作る
+ターミナルで作る
+・mkdir {dockerfileを作るディレクトリ}
+・cd {dockerfileを作るディレクトリ}
+・touch Dockerfile
+
+または
+
+vscodeで作る
+・vscodeでdockerfileを作るディレクトリを開く
+・vscode内でDockerfileを作る
+
+Docker for Visual Studio Code
+https://qiita.com/trakkyo/items/c0bde6d5bd12c3f69e51
 
 
+Dockerfileの中身を記述する
+例）
+FROM ubuntu:latest
+  ///ベースになるDocker image
+RUN touch test
+  ///ubuntu:latest の上に $ touch test を実行したimage layerを作成
+
+#マークでコメントを書くことができる
+
+## build（Dockerfileからdocker imageを作る）
+docker build {ディレクトリ名}　：　ディレクトリ内のDockerfileというファイルを探してビルドする
+※カレントディレクトリの場合は docker build . 
+　　　　　　　　　　　　　　　　　↑の形でbiludするのが一般的。
+
+ターミナルの最後に表示されている文字列がimageのIDとなる
+例）Successfully built 868fd2d6c226
+　　　　　　　　　　　　　　↑ココ
+
+※docker buildでビルドされたimageはimage名（リポジトリ名：タグ名）がnoneになっているため、dangling imageと呼ばれる
+
+### オプションで名前をつけてビルドする
+dangling imageを避けるには、オプションで名前をつけてbiludする
+
+docker build -t {IMAGE名} {ディレクトリ名}
+
+例）docker build -t new-ubuntu:latest .
+　　　　　　　　　　　　↑image名 = リポジトリ名：タグ名
+　　　　　　　　　　　　　　　　　　　　　　↑.でカレントディレクトリを指定
+
+ターミナルの最後にIDとイメージ名が表示される
+例）
+Successfully built 868fd2d6c226
+Successfully tagged new-ubuntu:latest
 
