@@ -302,3 +302,125 @@ Docker image　：　コンテナを作るためのもの。携帯して配布�
  ↓      ↑
 コンテナ　：　実際に開発したりアプリを実行する場所。
 　　　　　　　docker imageから簡単に作ったり消したりできる
+
+## Dockerのもっとも重要なスキル
+Dockerfileをメンテすること
+※コンテナを更新するときはなるべくDockerfileをメンテする
+
+# Dockerfileの書き方
+Dockerfileの基本的なinstruction（命令）
+
+・FROM
+・RUN
+・CMD
+
+## FROM
+・ベースとなるimageを決定。このimageの上にレイヤーが重なっていく。
+※DockerfileはFROMから書き始める
+
+参考：build実行後のターミナル表示
+Sending build context to Docker daemon  2.048kB
+Step 1/2 : FROM image
+ ---> 1e4467b07108             /// imageのID
+Step 2/2 : RUN touch test
+ ---> Using cache
+ ---> 868fd2d6c226             /// layerのID（imageの上に重なる）
+Successfully built 868fd2d6c226
+Successfully tagged new-ubuntu:latest
+
+## RUN
+・RUNに続くLunuxコマンドを実行
+※RUNを使うことで好きなようにカスタマイズできる
+※RUN毎にlayerが作られる
+
+参考：
+FROM ubuntu:latest
+RUN touch test
+RUN echo 'hello world' > test
+
+--
+layer / echo 'hello world' > test 
+--
+layer / touch test
+--
+layer /  ベースのimage（ubuntu:latest）
+
+### layer数を最小限にするために
+RUN,COPY,ADDのインストラクション（命令）はlayerを作る。
+特にRUNが多くなる。
+→インストラクションを増やせば増やすほどlayerが増える
+→コンテナが重くなる
+
+だから
+
+Docker imageのlayer数は最小限にする！
+
+方法：コマンドを&&でつなげる
+     バックスラッシュで改行する(複数インストールしたパッケージをみやすく)
+     　※アルファベット順に並べるとみやすくなる
+
+例）
+FROM ubuntu:latest
+RUN touch test
+RUN echo 'hello world' > test
+↓
+FROM ubuntu:latest
+RUN touch test && echo 'hello world' > test
+
+## Ubuntuでパッケージ管理する
+１）apt-get update:新しいパッケージリストを取得
+２）apt-get install {package}:packageをインストール
+
+例:layerを最小限にする）
+FROM ubuntu:latest
+RUN apt-get update
+RUN apt-get install xxx
+RUN apt-get install yyy
+RUN apt-get install zzz
+↓
+FROM ubuntu:latest
+RUN apt-get update && apt-get install -y \
+xxx \
+yyy \
+zzz
+
+※-y インタラクティブな質問に全てyesで答えるオプション。dockerでinstallする場合は選択肢を選べないのでオプションをつける
+
+## キャッシュ（cache）
+Dockerfileを作る・メンテナンスするときはキャッシュをうまく利用する
+
+【例】
+・１回目のbuild時のDockerfile
+--
+FROM ubuntu:latest
+RUN apt-get update
+RUN apt-get install -y \
+    curl \
+    nginx
+--
+buildすると、上記の２つのRUNがキャッシュに残る
+
+・Dockerfileにパッケージを追加インストール追記
+--
+FROM ubuntu:latest
+RUN apt-get update
+RUN apt-get install -y \
+    curl \
+    nginx
+RUN apt-get install -y \
+    cvs
+--
+buildすると上２つのRUNはキャッシュを参照するため実行されない
+追記したRUNだけ実行され、パッケージがインストールされる
+
+・キャッシュが通ることが確認できたので、DockerfileのRUNをまとめる
+--
+FROM ubuntu:latest
+RUN apt-get update && apt-get install -y \
+    curl \
+    cvs \    ///パッケージはアルファベット順に並べる
+    nginx
+--
+buildしてlayerを１つにする（キャッシュを参照するのでRUNは実行されない）
+
+## CMD
