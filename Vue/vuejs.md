@@ -78,6 +78,9 @@ new Vue ({
   </script>
 </body>
 
+dataが配列の場合、要素を取り出す時は{{ dataで定義した値[インデックス番号].要素のキー }}とかく
+例） {{ items[0].name }}
+
 ### ディレクティブによるHTML要素の拡張
 テキストコンテンツ内でDOMの属性に対して展開する。v-vindを使う。
 
@@ -103,4 +106,62 @@ v-vind・・・Vue.jsのディレクティブの１つ。v-vind:属性名="デ�
 javascript式で展開も可能。ただし、複雑化しがちなので用いるなら簡単なものにする
 
 ## フィルタ（filters）
-汎用的なテキストフォーマット処理を適用する仕組み
+汎用的なテキストフォーマット処理を適用する仕組み。
+日付処理、パーセンテージ処理、数値を３桁毎にカンマを入れる処理などがあげられる
+
+filters: {
+  フィルタ名: function(value) {
+    return ...
+  }
+}
+
+テキストコンテンツでは、定義したフィルターは{{ 値|フィルタ名 }}として使う
+
+例）
+<div id="app">
+    {{ item[0].price | numberWithDelimiter }}
+  </div>
+
+  <script>
+  var item = [
+  {
+    name: "本",
+    price: 1300,
+    quantity: 0
+  }]
+
+  var vm = new Vue ({
+    el: '#app',
+    data: {
+      item: item
+    },
+    filters: {
+      numberWithDelimiter: function(value) {
+        if (!value) {
+          return 0
+        }
+        return value.toString().replace(/(\d)(?=(\d{3})+$)/g, '$1,')
+        // 3桁毎にカンマを入れる
+      }
+    }
+  })
+
+  </script>
+
+## 算出プロパティ（computed）
+あるデータから派生するデータをプロパティとして公開する仕組み。
+データそのものに何らかの処理を与えたものをプロパティにしたいときに用いる。
+
+new Vue ({
+  computed: { //関数として実装、参照時はプロパティとして機能
+    算出プロパティ名: function(){
+      // retuen ...
+    }
+  }
+})
+
+### thisによる参照
+computedやmethodsで、dataや他の算出プロパティ（computed）を参照したいときは　this経由。
+
+この[this]はVueインスタンス自身を指す。
+※同一のcomputed/methods内やテキストコンテンツ内では使わないので混同しないこと。
