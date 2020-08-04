@@ -172,6 +172,13 @@ Vue.js独自の属性で、属性値の式の変化に応じたDOM操作を行�
 
 なお、Vueインスタンスをマウントした要素とその子孫でしか使うことができない。
 
+<主なディレクティブ>
+・v-if/v-show
+・v-bind
+・v-for
+・v-on
+
+
 ### 条件付きレンダリング（v-if/v-show）
 v-if/v-show：テンプレートの中の要素の表示・非表示を切り替える。
              いずれもtureで表示、falseで非表示。
@@ -217,3 +224,44 @@ v-bind:style="オブジェクトまたは配列"
 
 ### v-bindの省略記法
 例） v-bind:disabled → :disabled
+
+
+## リスト(繰り返し)レンダリング
+v-forディレクティブ／オブジェクトや配列データを繰り返しレンダリングする
+
+v-for='要素 in 配列'
+v-for='値 in オブジェクト'
+v-for='(値, キー) in オブジェクト'
+
+補足：v-bind:key='~'で生成時に一意的なキーを各要素に与える
+
+例）
+<div id="app">
+  <ul>
+    <li v-for="item in items" v-bind:key="item.name">
+      {{item.name}}: {{item.price}}×{{items.quantity}} = {{ item.price * items.quantity | numberWithDelimiter }}円
+    </li>
+  </ul>
+</div>
+
+
+## イベントハンドリング(v-on)
+イベントが起きたときに属性値の式を実行する。jsのchangeやinputなどにあたる
+
+v-on:イベント名="式として実行したい属性値"
+<input type="number" v-on:input="item.quantity = $event.target.value" v-bind:value="item.quantity" min="0">
+
+https://jp.vuejs.org/v2/guide/events.html
+
+### v-onの省略記法
+v-on:click → @click
+
+
+## フォーム入力バインディング（v-model）
+フォーム入力のバインディング
+
+<input type="number" v-model="item.quantity" min="0">
+
+## ライフサイクルフック
+
+## メソッド(methods)
