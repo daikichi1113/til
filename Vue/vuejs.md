@@ -247,11 +247,40 @@ v-for='(値, キー) in オブジェクト'
 
 ## イベントハンドリング(v-on)
 イベントが起きたときに属性値の式を実行する。jsのchangeやinputなどにあたる
-
 v-on:イベント名="式として実行したい属性値"
-<input type="number" v-on:input="item.quantity = $event.target.value" v-bind:value="item.quantity" min="0">
+
+例）
+<div id="app">
+    <p>{{ number }}回クリックされています</p>
+    <button v-on:click="countUp">カウントアップ</button>
+    <p v-on:mousemove="changeMousePosition">マウスを乗せてください</p>
+    <p>X：{{x}} Y：{{y}}</p>
+  </div>
+
+  <script>
+    new Vue ({
+      el: "#app",
+      data: {
+        number: 0,
+        x: 0,
+        y: 0
+      },
+      methods: {
+        countUp: function() {
+          this.number += 1
+        },
+        changeMousePosition: function(event) {
+          this.x = event.clientX
+          this.y = event.clientY
+        }
+      }
+    });
+  </script>
+
+※eventオブジェクトを引数にとるときは$eventと表記する
 
 https://jp.vuejs.org/v2/guide/events.html
+https://developer.mozilla.org/ja/docs/Web/Events
 
 ### v-onの省略記法
 v-on:click → @click
@@ -265,3 +294,42 @@ v-on:click → @click
 ## ライフサイクルフック
 
 ## メソッド(methods)
+Vueインスタンスのメソッドとして機能し、データの変更やサーバーにHTTPリクエストを送る際に用いる。
+Vueインストラクタオプションのmethodsプロパティで定義する。
+
+<button v-on:click="doBuy"></button>
+
+
+
+例）インストラクタの書き方
+methods: {
+  メソッド名: {
+    // 処理
+  }
+}
+
+例）templateでの呼び出し方
+{{ メソッド名() }}
+
+### イベントオブジェクト
+v-onディレクティブの属性値にメソッドを指定した場合、引数にはデフォルトでイベントオブジェクトが渡される
+
+このオブジェクトには、イベントが発生した要素や座標などの情報が含まれる。
+
+例）
+methods: {
+  メソッド名: function(event) {  //引数eventはイベントオブジェクト
+    // 処理
+  }
+}
+
+## conputedとmethodsの違い
+computed：リアクティブな依存関係が更新されたときにだけ再評価される。
+methods：再描画が起きると常に関数を実行する。
+
+つまり、methodsは描画元に関係ない値が変更された時でも関数を実行している。
+なので、計算する関数はcomputedを使った方が良い（計算処理が重くなる）
+
+https://jp.vuejs.org/v2/guide/computed.html
+
+# コンポーネント
