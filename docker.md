@@ -119,7 +119,7 @@ docker commit {コンテナ名またはID} {新しいDocker image名}
 
 # docker hubにdocker imageをpushする
 ## docker hubにリポジトリを作る
-自分用の亜tららしいリポジトリを作る（他人が作成したリポジトリは、許可がない限りpullしたリポジトリにアップはしないこと）
+自分用のあたらしいリポジトリを作る（他人が作成したリポジトリは、許可がない限りpullしたリポジトリにアップはしないこと）
 １つのimageに対して１つのリポジトリが割り当てられる
 
 ・docker hubのwebページで作る
@@ -318,6 +318,8 @@ Dockerfileの基本的なinstruction（命令）
 ・ベースとなるimageを決定。このimageの上にレイヤーが重なっていく。
 ※DockerfileはFROMから書き始める
 
+※必要最低限のDocker imageを入れるようにする
+
 参考：build実行後のターミナル表示
 Sending build context to Docker daemon  2.048kB
 Step 1/2 : FROM image
@@ -441,3 +443,197 @@ CMD ["ls"]
 ## RUNとCMDの違い
 RUNはlayerを作る
 CMDはlayerを作らない
+
+# docker buildの詳細
+## docker buildは何をしているのか
+docker build .　コマンドでなぜディレクトリを指定しているのか？
+
+docker buildコマンドで行っていること
+・dockerfileのあるディレクトリをコピー
+・コピーしたディレクトリをbuild contextとしてdocker daemonに渡す
+・docker daemonがbuild context（ディレクトリ）を元にimageを作る
+
+build contextの中にあるファイルはbuild時に使うことができるため、ディレクトリを指定する。
+
+## docker daemonとは
+dockerのアーキテクチャ（構造）はclient-server アーキテクチャ。
+
+client(コマンドで操作する場所)
+ docker build
+ docker pull
+ docker run
+
+Docker HOST（サーバー側。実際に実行している場所）
+ ・docker daemonがある。clientからの命令を実行する。
+ ・imageを作る、コンテナを作る
+
+## build contextとは
+build context = build時のディレクトリの状態
+
+※buildに関係のないフォルダやファイルは置かない。
+※build contextの中にあるファイルやフォルダはdocker deamomに渡すことができるが、docker imageには反映されない。
+反映させるためにはdockerfileにADDやCOPYのインストラクションを記述する必要がある。
+
+## COPY
+docker instructionの１つ。layerを作る。
+build contextにあるファイルをdocker imageに反映させる。
+
+dockerfileへの記述
+COPY {sorce(ファイル名)} /{反映させる先（ディレクトリ名）}
+
+例）
+// dockerfile
+FROM ubuntu:latest
+RUN mkdir /new_dir
+COPY something /new_dir/
+
+## ADD
+dockerfileへの記述
+ADD {sorce(ファイル名)} /{反映させる先（ディレクトリ名）}
+
+## COPY と ADD
+・COPY／単純にファイルやフォルダをコピーする場合
+・ADD／tarの圧縮ファイルを解凍したいとき
+
+### 知っておくと便利なコマンド
+echoコマンド：ファイルに文字列を入れる
+　echo '文字列' > ファイル名
+
+tarコマンド：tarファイル（圧縮ファイルを作る）
+　tar -cvf 圧縮ファイル名 圧縮するファイル
+
+mvコマンド：ファイルを移動する
+　mv 移動元のディレクトリ／ファイル名 移動先のディレクトリ／ファイル名
+
+　※mvコマンドを活用してファイル名の変更も可能
+　mv ディレクトリ／現在のファイル名 ディレクトリ／新しいファイル名
+
+## Dockerfileがbuild contextにない場合
+docker build -f {dockerfilename} {buildcontext} ディレクトリ名
+
+例えば...同じbuild contextを使ってbuildするDockerfileが複数ある場合などに使う。
+
+docker dir-|-Dockerfile.div
+           |-Dockerfile.test
+           |-sample dir *dockerfileのないbuild context      
+
+// sampleディレクトリ
+docker build -f ../Dockerfile.div sample dir
+
+*.はカレントディレクトリ、..は１つ上のディレクトリ 
+
+## CMD と ENTRYPOINT
+どちらもデフォルトコマンドを指定することができる。
+
+●何が違うのか
+・run時のコマンドの上書き
+ CMD:できる  docker run image名 上書きするコマンド 
+ ENTRYPOINT:できない。ただし、オプション部分は可能
+   docker run image名 上書きするオプション
+   → 上書きして欲しくないコマンドに使うと良い。
+
+●ENTRYPOINTがある場合
+ CMDはENTRYPOINTで指定したコマンドの引数をとる
+ つまり、ENTRYPOINTがある場合のCMD少し役割が変わり、ENTRYPOINTで指定した
+コマンドの引数だけを書くことになる。
+
+例）
+// Dockerfile(CMDのみ)
+FROM ubuntu:latest
+RUN touch test
+CMD ["ls", "--help"] //コマンドとその引数
+
+// Dockerfile(ENTRYPOINT有り)
+FROM ubuntu:latest
+RUN touch test
+ENTRYPOINT ["ls"] // コマンド
+CMD ["--help"] //ENTRYPOINTのコマンドの引数
+
+ENTRYPOINTはコンテナをコマンドのように使いたいときに使う。
+
+## ENV
+ENV:環境変数を設定するインストラクション
+
+＜書き方＞
+ENV {key} {value}...
+または
+ENV {key}={value}...
+
+コンテナの中で環境変数を確認するコマンド env
+
+## WORKDIR
+WORKDIR:Docker instruction（命令）の実行ディレクトリを変更する
+
+Docker instructionは基本的にルート直下で実行される。
+cdコマンドでディレクトリを移動したとしてもルートで実行される。
+そのため、WORKDIRが必要になる。
+
+※ただし、&&でcdコマンドを記述した場合は、そのディレクトリで実行してくれる
+
+書き方
+WORKDIR /作業するディレクトリ名
+
+cdを安易に使うとバグの元になるので注意。
+
+
+# ホストとコンテナの関係性
+
+host ←-------→ container
+         |
+         |
+▶︎ファイルシルテムの共有
+▶︎ファイルのアクセス権限
+▶︎ポートをつなげる
+▶︎コンピュータリソースの上限
+
+※全てdocker run コマンド時にオプションで設定
+
+## -vオプション（ファイルシステムの共有）
+-v {hostのマウント元のパス}:{container}
+ ホストのファイルシステムをコンテナにマウントする。
+ ※{container}はなくても作ってくれる。
+
+[重要]
+ホストのファイルシステムをコンテナの中にあるように見せる。
+※あくまでもホストにある。
+実際にはコンテナの中にはないため、コンテナの容量が軽くなる。
+
+例）
+docker run -it -v ~/projects/docker_stady/mounted:/new_dir dcdfb6b53f9a bash
+
+## -uオプション
+ユーザーIDとグループIDを指定してコンテナをrunする。
+
+ホストのユーザーIDとグループIDを確認する
+id -u　ユーザIDの確認
+id -g　グループIDの確認
+
+docker run -it -u $(id -u):$(id -g) イメージ名 bash
+
+[重要]
+ホストのユーザーIDを指定して実行しているため、ホストのユーザーID情報を共有している状態。ホストのユーザーIDがコンテナのユーザーIDとなっているわけではない。
+
+### パーミッション（アクセス権限）の見方
+ls -la: リストの全ファイルの詳細を見ることができる
+
+パーミッション   所有者 所有グループ                ファイル
+drwxr-xr-x   5  501 dialout  160 Aug  5 06:01 created_in_Dockerfile
+drwxr-xr-x   5 root root     360 Aug  5 07:00 dev
+
+d rwx r-x r-x    /// "r":読取り可 "w":書込み可 "x":実行可 "-"：権限なし
+|  |   |   |
+|  |   |   その他のアクセス権限 ※読取りと実行はできるが書き込みはできない
+|  |   所有グループのアクセス権限
+|  所有者のアクセス権限
+|
+"-":ファイル
+"d":ディレクトリ
+"l":シムリンク
+
+## -p（publish）オプション
+ホストのポートをコンテナのポートにつなげる(publishする)。
+
+ポート：プロセスがデータ通信をするために使うもの。
+       建物に例えると、IPアドレスが住所、ポートが部屋番号。
+
+docker run -it -p hostのport番号:containerのport番号 image名 bash
