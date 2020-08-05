@@ -637,3 +637,28 @@ d rwx r-x r-x    /// "r":読取り可 "w":書込み可 "x":実行可 "-"：権�
        建物に例えると、IPアドレスが住所、ポートが部屋番号。
 
 docker run -it -p hostのport番号:containerのport番号 image名 bash
+
+ブラウザでもlocalhost:ホストのポート番号でコンテナを表示させることができる。
+
+## コンテナがアクセスできる上限の設定
+--cpus {# ob CPUs} : コンテナがアクセスできる上限のCPUを設定
+--memory {byte} : コンテナがアクセスできる上限のメモリを設定
+
+docker run -it --cpus 上限のcpu数 --memory 上限のbyte数 image名 bash
+
+※コンテナのあらゆる情報を表示するコマンド
+docker inspect {container}
+↓
+その中で特定の事項を表示させるにはgrepを使う
+docker inspect {container} | grep -i 文字列(cpuなど) |
+                                      ↑この文字列を含む情報を抽出する
+
+### MacでCPU・メモリの確認コマンド
+物理コア数： sysctl -n hw.physicalcpu_max
+論理コア数： sysctl -n hw.logicalcpu_max
+メモリ： sysctl -n hw.memsize
+
+※バイト数
+1K byte = 1024(2^10) byte
+1M byte = 1024 * 1024 byte
+1G byte = 1024 * 1024 * 1024 byte 
