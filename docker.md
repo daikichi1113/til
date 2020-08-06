@@ -662,3 +662,12 @@ docker inspect {container} | grep -i 文字列(cpuなど) |
 1K byte = 1024(2^10) byte
 1M byte = 1024 * 1024 byte
 1G byte = 1024 * 1024 * 1024 byte 
+
+
+# docker compose
+docker comporse --version
+
+## development
+鉄則：１つのコンテナには１つのアプリケーション
+
+## CICD(Test and Deploy)
