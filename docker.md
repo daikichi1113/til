@@ -734,6 +734,9 @@ docker build .
 docker run -v ~/projects/docker_stady/product-register:/product-register -p 3000:3000 -it 4ee8a12508a7 bash
 
 ## docker composeを使ってコンテナを起動する
+docker-composeコマンドはdockerコマンドと対応している。
+さらにymlファイルにオプションを書いているので単純になる。
+
 <dockerコマンド>                      <docker-composeコマンド>
 docker build {build context}  ⇆      docker-compose build
 docker run {image}            ⇆      docker-compose up
