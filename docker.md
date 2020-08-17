@@ -670,4 +670,78 @@ docker comporse --version
 ## development
 鉄則：１つのコンテナには１つのアプリケーション
 
+例）
+フレームワークのコンテナ
+データベースのコンテナ
+
 ## CICD(Test and Deploy)
+テスト環境と本番環境で継続的にテスト公開していく
+dockerを使うことで簡単にCICDのパイプラインが簡単に構築できる
+
+## バージョン確認
+docker-compose --version
+
+## パッケージ一覧を作る
+コンテナを起動し、エラーが起きるたびに必要なパッケージをinstallしていく
+
+## docker composeを使う時
+docker runコマンドが長くなる時
+複数のコンテナをまとめて起動する時
+
+## docker composeを使うには
+docker-compose.ymlを作る（コンテナの情報をいれる）必要がある。
+コンテナを
+
+## docker-compose.ymlの書き方
+dockerfile:コンテナの中身そのものを定義する。
+docker compose:コンテナを使うときにどう起動するのか（パラメータ）を書く。
+
+つまり、docker-compose.ymlには
+・docker buildの内容
+・docker runで指定していたオプション
+の部分を書いていく。
+
+書き方のイメージ
+↓
+今からDocker composeのファイルを書きます宣言
+service1
+ service1のパラメータ
+ service1のパラメータ
+service2
+ service2のパラメータ
+ service2のパラメータ
+
+※docker runのオプションの数だけyamlファイルに記述するイメージ
+
+・実際に書いてみると...
+ーーー
+version: '3'  //宣言.バージョンを書く
+
+services:
+ webまたはapp:  //serviceの名前。
+  //これより以下はserviceのパラメータ。key: value
+  build: .          //この部分 → docker build .
+  ports:            //この部分 → -p 3000:3000
+   - '3000:3000'
+  volumes:          //この部分 → -v ~/projects/docker_stady/product-register:/product-register マウントする場所
+   - '.:/product-register    //ymlファイルに書くときは相対パスで書く。
+  tty: true         // -t
+  stdin_open: true  // -i
+ーーー
+
+上記のymlファイルは以下と同じ。
+docker build .
+docker run -v ~/projects/docker_stady/product-register:/product-register -p 3000:3000 -it 4ee8a12508a7 bash
+
+## docker composeを使ってコンテナを起動する
+<dockerコマンド>                      <docker-composeコマンド>
+docker build {build context}  ⇆      docker-compose build
+docker run {image}            ⇆      docker-compose up
+docker ps                     ⇆      docker-compose ps
+docker exec {container} {command} bash
+                              ⇆      docker-compose exec {service} bash
+
+<便利コマンド>
+docker-compose up --build  //buildしてup
+  ※ymlファイルを変更した後はこちら。upだけだと古いファイルを参照してしまう
+docker-compose down  //stopしてrm
