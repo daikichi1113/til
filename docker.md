@@ -748,3 +748,61 @@ docker exec {container} {command} bash
 docker-compose up --build  //buildしてup
   ※ymlファイルを変更した後はこちら。upだけだと古いファイルを参照してしまう
 docker-compose down  //stopしてrm
+
+## コンテナの中でフレームワークを使ってアプリを作る
+例）railsを使う場合
+・docker-compose exec {service} bash  //アプリを作るコンテナを起動する
+・rails new . --force --database=postgresql --skip-bundle  //postgresqlをDBに設定してrails new実行
+・exit
+・docker-compose down
+・docker-compose up --build -d  //新しいファイルを指定してbuildする
+
+## DBのセットアップ
+docker-compose.ymlのDB設定を追記する
+
+例）Railsの場合
+更新するファイル
+・database.yml
+・docker-compose.yml
+  コンテナ側の環境変数はdocker-compose.ymlにenvironmentのパラメータとして記載する
+
+version: '3'
+
+volumes:
+  data-base:
+
+services:
+  web:
+    build: .
+    ports:
+      - '3000:3000'
+    volumes:
+      - '.:/product-register'
+    environment:
+      - 'DATABASE_PASSWORD=postgres'
+    tty: true
+    stdin_open: true
+    depends_on:
+      - db
+    links:
+      - db
+    
+  db:
+    image: postgres
+    volumes:
+      - 'de-data:/var/lib/postgresql/data'
+
+### docker volumes
+どういう時に作るか
+→コンテナで作ったデータをホスト側に保存する。
+ そのコンテナを削除してもデータが残る。
+ 他のコンテナでもそのデータを使う。
+
+コンテナ内でdocker volumeコマンドを使用できる
+docker volume ls  //volumeのリストをみる
+docker volume inspect volume名  //volumeの詳細をみる
+その他、create,rm,pruneがある。
+
+詳細はdocker volume --helpで確認できる
+
+# dockerを使ったCICD
