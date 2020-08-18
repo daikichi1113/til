@@ -733,6 +733,12 @@ services:
 docker build .
 docker run -v ~/projects/docker_stady/product-register:/product-register -p 3000:3000 -it 4ee8a12508a7 bash
 
+
+※docker-compose.ymlの記述方法
+・エディタ
+もしくは
+・ターミナルで該当ディレクトリにてviエディタ vi docker-compose.yml
+
 ## docker composeを使ってコンテナを起動する
 docker-composeコマンドはdockerコマンドと対応している。
 さらにymlファイルにオプションを書いているので単純になる。
