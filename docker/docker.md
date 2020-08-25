@@ -757,6 +757,9 @@ docker exec {container} {command} bash
 docker-compose up --build  //buildしてup
   ※ymlファイルを変更した後はこちら。upだけだと古いファイルを参照してしまう
 docker-compose down  //stopしてrm
+docker-compose logs コンテナ名 //log表示
+
+-dオプション ディタッチドモードで起動
 
 ## コンテナの中でフレームワークを使ってアプリを作る
 例）railsを使う場合
