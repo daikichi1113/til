@@ -448,3 +448,25 @@ commitメソッドの第２引数にpayload
 ・index.jsがストアオブジェクトをexportしない
 または
 ・index.jsがstoreフォルダ配下に存在しない
+
+# その他
+init: 初期設定
+add: 追加
+remove: 削除
+toggle: チェックボックス追加時
+
+v-on:submit.prevent  .preventはページを遷移しない
+
+
+## 時刻フォーマットの形成
+created.toDate() 
+さらにmomentをinstall  npm install --save moment
+filterを使う
+
+{{ todo.created.toDate() }}
+
+filters: {
+  dateFilter: function(date) {
+    return moment(date).format('YYYY/MM/DD HH:mm:ss')
+  }
+}
